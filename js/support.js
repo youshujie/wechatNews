@@ -1,4 +1,4 @@
-var $ = function (selector) {
+const $ = function (selector) {
     if (document.querySelectorAll(selector).length === 1) {
         return document.querySelector(selector);
     } else {
@@ -6,12 +6,12 @@ var $ = function (selector) {
     }
 };
 
-var ajax = function (conf) {
-    var method = conf.method;
-    var url = conf.url;
-    var success = conf.success;
-    var data = conf.data;
-    var xhr = new XMLHttpRequest();
+const ajax = function (conf) {
+    let method = conf.method;
+    let url = conf.url;
+    let success = conf.success;
+    let data = conf.data;
+    let xhr = new XMLHttpRequest();
 
     xhr.open(method, url, true);
 
@@ -26,6 +26,5 @@ var ajax = function (conf) {
         if (xhr.readyState == 4 && xhr.status == 200) {
             success(JSON.parse(xhr.responseText));
         }
-    };
-    
+    };  
 };
