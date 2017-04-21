@@ -1,6 +1,14 @@
-let swiper = $('.swiper');
-let banner = $('.banner');
-let tab = $('.indicator').children;
+const $$ = function (selector) {
+    if (document.querySelectorAll(selector).length === 1) {
+        return document.querySelector(selector);
+    } else {
+        return document.querySelectorAll(selector);
+    }
+};
+
+let swiper = $$('.swiper');
+let banner = $$('.banner');
+let tab = $$('.indicator').children;
 let startPoint;
 let endPoint;
 let disX;
