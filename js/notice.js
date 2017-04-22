@@ -55,7 +55,14 @@ function add(word, area) {
                     // console.log(res.data.length);
                     if (arrLen > 0) {
                         for (var i = 0; i < arrLen; i++) {
-                            result += '<a class="news-link" href="' + res.data[i].target_url + '">' + '<div class="news-img">' + '<img src="' + res.data[i].pictures.photo_src + '" alt="">' + '</div>' + '<div class="news-content">' + '<h2 class="news-title">' + res.data[i].title + '</h2>' + '<p class="news-desc">' + res.data[i].content + '</p>' + '</div>' + '</a>';
+                            result += '<a class="news-link" href="' + res.data[i].target_url + '">' 
+                                        + '<div class="news-img">' 
+                                        + '<img src="' + res.data[i].pictures.photo_src + '" alt="">' 
+                                        + '</div>' 
+                                        + '<div class="news-content">' 
+                                        + '<h2 class="news-title">' + res.data[i].title + '</h2>' 
+                                        + '<p class="news-desc">' 
+                                        + res.data[i].content + '</p>' + '</div>' + '</a>';
                         }
                         // 如果没有数据
                     } else if (arrLen == 0) {
@@ -74,11 +81,11 @@ function add(word, area) {
                     }, 1000);
                 },
 
-                error: function(xhr, type){
-                    console.log('Ajax error!');
-                    // 即使加载出错，也得重置
-                    me.resetload();
-                }
+                // error: function(xhr, type){
+                //     console.log('Ajax error!');
+                //     // 即使加载出错，也得重置
+                //     me.resetload();
+                // }
             })
         }
     });

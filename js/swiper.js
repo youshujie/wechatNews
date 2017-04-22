@@ -8,6 +8,24 @@ var startEle = 0;
 var index = 0;
 var dis = 0;
 
+ajax({
+        method: 'GET',
+        url: 'http://www.pumbf.me/emergencytask/public/index.php/api/Article/hotArticle?page=1&size=3',
+        dataType: 'json',
+        success: function(res) {
+            var imgs = '';
+            var imgArr = res.data;
+            var btn;
+            for (var i = 0; i < imgArr.length; i++) {
+                imgs += '<div class="banner"><a href="' + imgArr[i].target_url + ' alt="">'
+                        + '<img src="'+ imgArr[i].pictures[0].photo_src + ' alt="">'
+                        + '<p class="img-des">' + imgArr[i].title + '</p>' + '</div>' + '</a>';
+            }
+            swiper.style.width = 10 * imgArr.length + 'rem'; 
+            swiper.innerHTML = imgs;
+        }    
+})
+
 swiper.addEventListener('touchstart', function (e) {
     startPoint = e.changedTouches[0].pageX;
     startEle = trans(swiper, "translateX");
@@ -62,22 +80,22 @@ function buttonChange(ele) {
     };
     ele[index].className = "on";
 }
-// ajax({
+ajax({
 
-//     method: 'GET',
-//     url: 'http://www.pumbf.me/emergencytask/public/index.php/api/Article/notice?page=1&size=5',
-//     dataType: 'json',
+    method: 'GET',
+    url: 'http://www.pumbf.me/emergencytask/public/index.php/api/Article/notice?page=1&size=5',
+    dataType: 'json',
 
-//     success: function(res) {
-//         var arrLen = res.data.length;
-//         // console.log(res.data);
-//         // console.log(res.data.length);
-//         var result = '';
-//         if (arrLen > 0) {
-//             for (var i = 0; i < arrLen; i++) {
-//                 result += '<a class="news-link" href="' + res.data[i].target_url + '">' + '<div class="news-img">' + '<img src="' + res.data[i].pictures.photo_src + '" alt="">' + '</div>' + '<div class="news-content">' + '<h2 class="news-title">' + res.data[i].title + '</h2>' + '<p class="news-desc">' + res.data[i].content + '</p>' + '</div>' + '</a>';
-//             }
-//         $$('.notice').innerHTML = result;
-//         }
-//     }
-// });
+    success: function(res) {
+        var arrLen = res.data.length;
+        // console.log(res.data);
+        // console.log(res.data.length);
+        var result = '';
+        if (arrLen > 0) {
+            for (var i = 0; i < arrLen; i++) {
+                result += '<a class="news-link" href="' + res.data[i].target_url + '">' + '<div class="news-img">' + '<img src="' + res.data[i].pictures.photo_src + '" alt="">' + '</div>' + '<div class="news-content">' + '<h2 class="news-title">' + res.data[i].title + '</h2>' + '<p class="news-desc">' + res.data[i].content + '</p>' + '</div>' + '</a>';
+            }
+        $$('.notice').innerHTML = result;
+        }
+    }
+});
