@@ -63,12 +63,12 @@ a {
 .content {
   width: 100%;
 }
-.content nav {
+.content .tab {
   width: 100%;
   height: 1.17333333rem;
   background: #f2f2f2;
 }
-.content nav div {
+.content .tab div {
   float: left;
   width: 33.3%;
   height: 1.17333333rem;
@@ -77,10 +77,12 @@ a {
   font-size: 0.4rem;
   overflow: hidden;
 }
-.content nav .active {
+.content .tab .active {
   color: #21b100;
 }
-.article {
+.study,
+.notice,
+.news {
   width: 100%;
 }
 .news-link {

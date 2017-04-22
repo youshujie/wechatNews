@@ -1,31 +1,39 @@
-var ajax = function (conf) {
-    var method = conf.method;
-    var url = conf.url;
-    var data = conf.data;
-    var success = conf.success;
-    var dataType = conf.dataType;
+var tab = $$('.tab').children;
+var notice = $$('#notice');
+var study = $$('#studyMaterial');
+var news = $$('#news');
 
-    var xhr = new XMLHttpRequest();
-    xhr.open(method, url, true);
+notice.addEventListener('touchend', function(e) {
+    keyWord = 'notice';
+    e.preventDefault();
+    set('.notice', 0);
+    add(keyWord, '.notice');
+    console.log($$('.dropload-down'));
+    $('.dropload-down')[0].remove();
+    console.log(keyWord);
+})
 
-    if (method == 'GET' || method == 'get') {
-        xhr.send(null);
-    } else if (method == 'POST' || method == 'post') {
-        xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
-        xhr.send(data);
-    }
+study.addEventListener('touchend', function(e) {
+    keyWord = 'studyMaterial';
+    e.preventDefault();
+    set('.study', 1);
+    add(keyWord, '.study');
+    console.log($$('.dropload-down'));
+    $('.dropload-down')[0].remove();       
+    console.log(keyWord);
+})
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
+news.addEventListener('touchend', function(e) {
+    keyWord = 'news';
+    e.preventDefault();
+    set('.news', 2);
+    add(keyWord, '.news');
+    $('.dropload-down')[0].remove();    
+    console.log(keyWord);
+})
 
-            success(JSON.parse(xhr.responseText));
 
-        }
-    };
-    
-}
-
-$(function() {
+function add(word, area) {
     var page = 1;
     var size = 5;
 
@@ -38,11 +46,10 @@ $(function() {
             ajax({
 
                 method: 'GET',
-                url: 'http://www.pumbf.me/emergencytask/public/index.php/api/Article/notice?page='+page+'&size='+size,
+                url: 'http://www.pumbf.me/emergencytask/public/index.php/api/Article/'+word+'?page='+page+'&size='+size,
                 dataType: 'json',
 
                 success: function(res) {
-                    // console.log(page);
                     var arrLen = res.data.length;
                     // console.log(res.data);
                     // console.log(res.data.length);
@@ -61,7 +68,7 @@ $(function() {
                     // 为了测试，延迟1秒加载
                     setTimeout(function() {
                         // 插入数据到页面，放到最后面
-                        $('.article').append(result);
+                        $(area).append(result);
                         // 每次数据插入，必须重置
                         me.resetload();
                     }, 1000);
@@ -75,4 +82,14 @@ $(function() {
             })
         }
     });
-});
+};
+add('notice', '.notice');
+
+function set(ele, num) {
+    for (var i = 0; i < 3; i++) {
+        $$('.area')[i].style.display = 'none';
+        tab[i].className = '';
+    }
+    $$(ele).style.display = 'block';
+    tab[num].className = 'active';
+}

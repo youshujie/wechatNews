@@ -1,39 +1,31 @@
-const $$ = function (selector) {
-    if (document.querySelectorAll(selector).length === 1) {
-        return document.querySelector(selector);
-    } else {
-        return document.querySelectorAll(selector);
-    }
-};
+var swiper = $$('.swiper');
+var banner = $$('.banner');
+var button = $$('.indicator').children;
+var startPoint;
+var endPoint;
+var disX;
+var startEle = 0;
+var index = 0;
+var dis = 0;
 
-let swiper = $$('.swiper');
-let banner = $$('.banner');
-let tab = $$('.indicator').children;
-let startPoint;
-let endPoint;
-let disX;
-let startEle = 0;
-let index = 0;
-let dis = 0;
-
-swiper.addEventListener('touchstart', (e) => {
+swiper.addEventListener('touchstart', function (e) {
     startPoint = e.changedTouches[0].pageX;
     startEle = trans(swiper, "translateX");
 }); 
-swiper.addEventListener('touchmove', (e) => {
+swiper.addEventListener('touchmove', function(e) {
     endPoint = e.changedTouches[0].pageX;
     disX = endPoint - startPoint;
     trans(swiper, "translateX", (disX + startEle) / 75 + dis);
 });
-swiper.addEventListener('touchend', (e) => {
-    if (disX < 0 && dis > -20) {
+swiper.addEventListener('touchend', function (e) {
+    if (disX < 0 && dis > -10*(banner.length-1)) {
         dis = dis - 10;
         index++;
     } else if (disX > 0 && dis < 0) {
         dis = dis + 10;
         index--;
     } 
-    tabChange(tab);
+    buttonChange(button);
 });
 
 function trans(ele, attr, val) {
@@ -62,11 +54,30 @@ function trans(ele, attr, val) {
     } 
 }
 
-function tabChange(ele) {
+function buttonChange(ele) {
     swiper.style.transition = "300ms";
     trans(swiper, "translateX", dis);
-    for(let i = 0; i < ele.length; i++) {
+    for(var i = 0; i < ele.length; i++) {
         ele[i].className = "";
     };
     ele[index].className = "on";
 }
+// ajax({
+
+//     method: 'GET',
+//     url: 'http://www.pumbf.me/emergencytask/public/index.php/api/Article/notice?page=1&size=5',
+//     dataType: 'json',
+
+//     success: function(res) {
+//         var arrLen = res.data.length;
+//         // console.log(res.data);
+//         // console.log(res.data.length);
+//         var result = '';
+//         if (arrLen > 0) {
+//             for (var i = 0; i < arrLen; i++) {
+//                 result += '<a class="news-link" href="' + res.data[i].target_url + '">' + '<div class="news-img">' + '<img src="' + res.data[i].pictures.photo_src + '" alt="">' + '</div>' + '<div class="news-content">' + '<h2 class="news-title">' + res.data[i].title + '</h2>' + '<p class="news-desc">' + res.data[i].content + '</p>' + '</div>' + '</a>';
+//             }
+//         $$('.notice').innerHTML = result;
+//         }
+//     }
+// });
